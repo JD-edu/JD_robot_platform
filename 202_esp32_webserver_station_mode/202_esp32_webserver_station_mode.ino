@@ -15,8 +15,8 @@
 #define STOP      3
 
 /* Put your SSID & Password */
-const char* ssid = "iptime";  // Enter SSID here
-const char* password = "2384Jeong";  //Enter Password here
+const char* ssid = "SK_WiFiGIGA73BA_2.4G";  // Enter SSID here
+const char* password = "1609043407";  //Enter Password here
 
 int motor_status = STOP;
 
