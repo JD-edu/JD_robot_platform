@@ -51,8 +51,65 @@ ESP32는 다양한 모듈과 보드가 존재하기 대문에 우리가 사용�
 
 이렇게 해서 ESP32 개발환경 및 ESP32 DevKit 선택이 끝이 났습니다. 
 
+### 에제 코드를 돌려보기 
+이제 개발환경 셋업이 끝이 났으므로 예제 코드를 한번 돌려보기로 하겠습니다. 깃허브에서 다운로드 받은 소스코드 중에서 "101_esp32_LED" 폴더에 101_esp32_LED.ino 소스코드 파일을 아두이노 IDE 파일 -> 열기 로 엽니다. 이 소스코드는 ESP32 DevKit에 IO2번에 연결되어 있는 LED를 on-off 해주는 코드 입니다. 
 
+![image](https://github.com/JD-edu/JD_robot_platform/assets/96219601/79d12d40-da8d-420f-89ad-040c7e084aba)
 
+#### 에제 코드 살펴보기
+"101_esp32_LED.ino" 코드는 다음과 같이 구성되어 있습니다. 
+
+```C
+void setup() {
+  Serial.begin(115600);
+  pinMode(2, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(2, HIGH);
+  Serial.println("LED ON");
+  delay(1000);
+  digitalWrite(2, LOW);
+  Serial.println("LED OFF");
+  delay(1000);
+}
+```
+
+setup() 함수에서 pinMode()명령을 통해 IO2를 출력모드로 설정합니다. 그리고 시리얼포트를 115200의 속도로 시작합니다. 일반적인 아두이노 우노와 같이 setup() 함수는 마이크로컨트롤러가 실행이 되면 한번만 실행이 됩니다. 시리얼 함수의 상세한 사항은 [여기](https://www.arduino.cc/reference/ko/language/functions/communication/serial/)를 참고 합니다. pinMode() 함수는 [여기](https://www.arduino.cc/reference/ko/language/functions/digital-io/pinmode/)를 참고합니다.  
+
+```C
+  Serial.begin(115600);
+  pinMode(2, OUTPUT);
+```
+
+보통 준비 코드를 여기에 넣습니다. setup() 함수가 실핻된 후에는 loop() 함수가 실행됩니다. 역시 아두이노 우노와 같이 이 아두이노의 전원을 차단하여 실행을 중지시킬 때까지 loop()함수는 계속 반복이 됩니다. ESP32 DevKit의 IO2번 핀에는 LED가 연결되어 있어서 IO2핀을 LOW로 할 경우에 ED가 꺼지고, HIGH로 할 경우 LED가 켜집니다. IO2의 출력을 HIGH 혹운 LOW로 하기 위해서 digitalWrtie() 사용합니다. digitalWrite() 함수는 [여기](https://www.arduino.cc/reference/ko/language/functions/digital-io/digitalwrite/)를 참고합니다. 
+
+```C
+  digitalWrite(2, HIGH);
+  ...
+  digitalWrite(2, LOW);
+```
+
+#### 예제 코드 빌드 및 업로드 
+이제 코드를 빌드하고 ESP32 DevKit 보드로 업로드 해야 합니다. 다음 그림과 같이 도구 -> 포트  메뉴를 통해해서 업로드할 포트를 정해 주어야 합니다. 가능하면 컴퓨터에 ESP32 DevKit 하나만 남겨놓고 작업하는 것이 좋습니다. PC에 ESP32 DevKit가 연결되어 있다면 포트가 빨간색 원처럼 나타날 것 입니다.  
+
+![esp32_업로드포트](https://github.com/JD-edu/JD_robot_platform/assets/96219601/26f9abbf-4b05-4251-83e7-06a7bb37ed9c)
+
+준비가 다 되었으면 도구 메뉴를 통해서 다음 그림과 같이 셋팅이 되었는지 다시 한번 확인합니다. 보드는 "ESP32 Dev Module"로 셋팅이 되어있어야 합니다. 포트는 각 PC마다 다르지만 해당하는 포트가 연결되어 있어야 합니다(얘: COMXX). 파란색 사각형 처럼 정보가 표시되어야 합니다. 특뱔한 일이 없다면 이 파란색 사각형 내부의 정보는 건드리지 않아도 됩니다. 
+
+![esp32_업로드_셋팅](https://github.com/JD-edu/JD_robot_platform/assets/96219601/d189a1f6-5bd8-46c6-a811-0c0c3b7a81fe)
+
+모든 셋팅이 완료되면 다음과 같이 업로드 아이콘을 클릭해서 컴파일 및 업로드를 실행합니다. 업로드 버튼은 다음 그림의 흰색의 화살표 모양의 버튼 입니다. 
+
+![esp32_업로드_버튼](https://github.com/JD-edu/JD_robot_platform/assets/96219601/b3b6040f-0375-4591-8608-91e8fcbb5910)
+
+업로드가 실행이 되면 컴파일과 업로드를 진행합니다. 컴파일 상황과 업로드 상태가 아두이노 IDE 아래 정보창에 다음과 같이 표시됩니다. 다음 그림과 같은 메시지가 표시되면 업로드가 완료 된 것 입니다. 
+
+![image](https://github.com/JD-edu/JD_robot_platform/assets/96219601/a1f549d6-af8e-453f-a234-9ef4f59ca51d)
+
+이제 업로드가 완료되면 코드가 동작되면서 LED가 on-off 되는 것을 확인할 수 있습니다. 코드가 동작되면서 시리얼 출력을 하게 되는데 이것은 도구 -> 시리얼 모니터 메뉴를 통해서 시리얼 모니터를 실행할 수 있습니다. 시리얼 모니터가 실행되면 다음 그림과 같이 실행되고 시리얼 메시지가 출력이 됩니다. 
+
+![image](https://github.com/JD-edu/JD_robot_platform/assets/96219601/7dd8afa3-3e2f-41b2-8e7e-b8059a55d9ab)
 
 
 
