@@ -18,7 +18,6 @@ void go_forward(){
   digitalWrite(M3_B, LOW);
   digitalWrite(M4_A, HIGH);
   digitalWrite(M4_B, LOW);
-   
 }
 
 void go_backward(){
