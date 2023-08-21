@@ -59,26 +59,32 @@ void read_multi_sensors() {
 }
 
 void distance_sensor_setup() {
+
+  Serial.println("VL53L0X: setup...");
   // all reset
   digitalWrite(SHT_LOX1, LOW);    
   digitalWrite(SHT_LOX2, LOW);
   digitalWrite(SHT_LOX3, LOW);
   digitalWrite(SHT_LOX4, LOW);
   delay(10);
+
+  Serial.println("VL53L0X: Both in reset mode...(pins are low)");
+
   // all unreset
   digitalWrite(SHT_LOX1, HIGH);
   digitalWrite(SHT_LOX2, HIGH);
   digitalWrite(SHT_LOX3, HIGH);
   digitalWrite(SHT_LOX4, HIGH);
-  //delay(10);
+  delay(10);
 
-  // activating LOX1 and reseting LOX2
+  // 1 센서 활성화, 2/3/4 센서 비활성화 
   digitalWrite(SHT_LOX1, HIGH);
   digitalWrite(SHT_LOX2, LOW);
   digitalWrite(SHT_LOX3, LOW);
   digitalWrite(SHT_LOX4, LOW);
+  delay(10);
 
-  // initing LOX1
+  // 1 센서 주소 할당하기. 1 센서가 반응하지 않으면 계속 시도하기  
   if(!lox1.begin(LOX1_ADDRESS)) {
     Serial.println(F("Failed to boot first VL53L0X"));
     while(1){
@@ -87,13 +93,10 @@ void distance_sensor_setup() {
       }
     }
   }
-  delay(10);
-
-  // activating LOX2
+  
+  // 2 센서 주소 할당하기, 2 센서가 반응하지 않으면 계속 시도학 ㅣ
   digitalWrite(SHT_LOX2, HIGH);
   delay(10);
-
-  //initing LOX2
   if(!lox2.begin(LOX2_ADDRESS)) {
     Serial.println(F("Failed to boot second VL53L0X"));
     while(1){
@@ -103,11 +106,9 @@ void distance_sensor_setup() {
     }
   }
 
-  // activating LOX3
+  // 3 센서 주소 할당하기, 3 센서가 반응하지 않으면 계속 시도학 ㅣ
   digitalWrite(SHT_LOX3, HIGH);
   delay(10);
-
-  //initing LOX3
   if(!lox3.begin(LOX3_ADDRESS)) {
     Serial.println(F("Failed to boot third VL53L0X"));
     while(1){
@@ -117,7 +118,7 @@ void distance_sensor_setup() {
     }
   }
 
-  // activating LOX4
+  // 4 센서 주소 할당하기, 4 센서가 반응하지 않으면 계속 시도학 ㅣ
   digitalWrite(SHT_LOX4, HIGH);
   delay(10);
   //initing LOX4
@@ -134,6 +135,11 @@ void distance_sensor_setup() {
 void setup() {
   Serial.begin(115200);
   Serial.print("ACT ground robot Start...");
+  pinMode(SHT_LOX1, OUTPUT);
+  pinMode(SHT_LOX2, OUTPUT);
+  pinMode(SHT_LOX3, OUTPUT);
+  pinMode(SHT_LOX4, OUTPUT);
+  distance_sensor_setup();
 }
 
 void loop() {

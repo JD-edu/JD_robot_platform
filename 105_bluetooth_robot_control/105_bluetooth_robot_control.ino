@@ -82,7 +82,7 @@ void stop(){
 
 void setup() {
   Serial.begin(115200);
-  SerialBT.begin("Bluetooth robot control..."); //Bluetooth device name
+  SerialBT.begin("JD 4wheel robot"); //Bluetooth device name
   Serial.println("The device started, now you can pair it with bluetooth!");
   pinMode(M1_A, OUTPUT);
   pinMode(M1_B, OUTPUT);
@@ -114,5 +114,4 @@ void loop() {
       stop();
     }
   }
-  
 }
