@@ -3,8 +3,8 @@
 // set the pins to shutdown
 #define SHT_LOX1 32
 #define SHT_LOX2 33
-#define SHT_LOX3 25
-#define SHT_LOX4 13
+#define SHT_LOX3 3
+#define SHT_LOX4 19
 
 #define LOX1_ADDRESS 0x40
 #define LOX2_ADDRESS 0x41
@@ -145,5 +145,13 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   read_multi_sensors();
+  Serial.print(sensor1);
+  Serial.print(" ");
+  Serial.print(sensor2);
+  Serial.print(" ");
+  Serial.print(sensor3);
+  Serial.print(" ");
+  Serial.print(sensor4);
+  Serial.println(" ");
   delay(100);
 }
