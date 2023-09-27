@@ -121,11 +121,13 @@ https://github.com/vincasmiliunas/ESP32-Arduino-TB6612FNG
 
 ![image](https://github.com/JD-edu/JD_robot_platform/assets/96219601/93eb62de-3907-4613-b287-e8c0623c81c9)
 
-다은로드 받은 라이브러리 코드를 사용자 PC에 아두이노 IDE가 설치된 폴더에 카피합니다. 일반적으로 아두이노 IDE가 서리된 폴터는 다음과 같습니다. 
+다은로드 받은 라이브러리 코드를 사용자 PC에 아두이노 IDE가 설치된 폴더에서 "libraries" 폴더에 카피합니다. 일반적으로 아두이노 IDE가 설치된 폴터는 다음과 같습니다. 
 
 <pre><code>
-https://github.com/vincasmiliunas/ESP32-Arduino-TB6612FNG
+C:\Users\user\Documents\Arduino\libraries
 </code></pre>
+
+사용자의 PC환경에 따라 다르지만 대부분 "문서" 폴더에 Arduino폴데어 설치되어 있습니다. 
 
 #### 예제 코드 빌드 및 업로드 
 이제 코드를 빌드하고 ESP32 DevKit 보드로 업로드 해야 합니다. 다음 그림과 같이 ***도구 -> 포트***  메뉴를 통해해서 업로드할 포트를 정해 주어야 합니다. 가능하면 컴퓨터에 ESP32 DevKit 하나만 남겨놓고 작업하는 것이 좋습니다. PC에 ESP32 DevKit가 연결되어 있다면 포트가 빨간색 원처럼 나타날 것 입니다.  
