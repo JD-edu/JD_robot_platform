@@ -34,38 +34,98 @@ ESP32는 다양한 모듈과 보드가 존재하기 대문에 우리가 사용�
 이제 개발환경 셋업이 끝이 났으므로 예제 코드를 한번 돌려보기로 하겠습니다. 깃허브에서 다운로드 받은 소스코드 중에서 "101_esp32_LED" 폴더에 101_esp32_LED.ino 소스코드 파일을 아두이노 IDE ***파일 -> 열기***  로 엽니다. 이 소스코드는 ESP32 DevKit에 IO2번에 연결되어 있는 LED를 on-off 해주는 코드 입니다. 
 
 #### 에제 코드 살펴보기
-"101_esp32_LED.ino" 코드는 다음과 같이 구성되어 있습니다. 
+"100_get_started.ino" 코드는 다음과 같이 구성되어 있습니다. 
 
 ```C
+// install TB6612FNG library
+//https://github.com/vincasmiliunas/ESP32-Arduino-TB6612FNG
+
+#include <TB6612FNG.h>
+
+#define MSLEEP  16
+#define IA1     14
+#define IB1     12
+#define PWM1    13
+#define IA2     27
+#define IB2     26
+#define PWM2    25
+#define IA3     17
+#define IB3     5
+#define PWM3    18
+#define IA4     4
+#define IB4     2
+#define PWM4    15
+
+Tb6612fng motors1(16, 14, 12, 13, 26, 27, 25);
+Tb6612fng motors2(16, 5, 17, 18, 4, 2, 15);
+void go_forward(){
+  Serial.println("forward");
+  motors1.drive(1);
+  motors2.drive(1);
+}
+
+void go_backward(){
+  Serial.println("backward");
+  motors1.drive(-1);
+  motors2.drive(-1);
+}
+
+void turn_right(){
+  Serial.println("right");
+  motors1.drive(1);
+  motors2.drive(-1);
+}
+
+void turn_left(){
+  Serial.println("left");
+  motors1.drive(-1);
+  motors2.drive(1); 
+}
+
+void stop(){
+  Serial.println("stop");
+  motors1.drive(0);
+  motors2.drive(0);
+  delay(200);
+}
+
 void setup() {
-  Serial.begin(115600);
-  pinMode(2, OUTPUT);
+  Serial.begin(115200);
+  Serial.print("motor test start...");
+
+  motors1.begin();
+  motors2.begin();
+
 }
 
 void loop() {
-  digitalWrite(2, HIGH);
-  Serial.println("LED ON");
-  delay(1000);
-  digitalWrite(2, LOW);
-  Serial.println("LED OFF");
-  delay(1000);
+    go_forward();
+    delay(1000);
+    go_backward();
+    delay(1000);
+    turn_left();
+    delay(1000);
+    turn_right();
+    delay(1000);
 }
 ```
 
-setup() 함수에서 pinMode()명령을 통해 IO2를 출력모드로 설정합니다. 그리고 시리얼포트를 115200의 속도로 시작합니다. 일반적인 아두이노 우노와 같이 setup() 함수는 마이크로컨트롤러가 실행이 되면 한번만 실행이 됩니다. 시리얼 함수의 상세한 사항은 [여기](https://www.arduino.cc/reference/ko/language/functions/communication/serial/)를 참고 합니다. pinMode() 함수는 [여기](https://www.arduino.cc/reference/ko/language/functions/digital-io/pinmode/)를 참고합니다.  
+#### 모터 드러이버 라이브러리 설치 
+로봇을 동작시키기 위해서는 먼저 모터 동작시키는 라이브러리를 설치해야 합니다. 설치해야 할 라이브러리의 URL은 다음과 같습니다. 
 
-```C
-  Serial.begin(115600);
-  pinMode(2, OUTPUT);
-```
+<pre><code>
+https://github.com/vincasmiliunas/ESP32-Arduino-TB6612FNG
+</code></pre>
 
-보통 준비 코드를 여기에 넣습니다. setup() 함수가 실핻된 후에는 loop() 함수가 실행됩니다. 역시 아두이노 우노와 같이 이 아두이노의 전원을 차단하여 실행을 중지시킬 때까지 loop()함수는 계속 반복이 됩니다. ESP32 DevKit의 IO2번 핀에는 LED가 연결되어 있어서 IO2핀을 LOW로 할 경우에 LED가 꺼지고, HIGH로 할 경우 LED가 켜집니다. IO2의 출력을 HIGH 혹운 LOW로 하기 위해서 digitalWrtie() 사용합니다. digitalWrite() 함수는 [여기](https://www.arduino.cc/reference/ko/language/functions/digital-io/digitalwrite/)를 참고합니다. 
+라이브러리를 설치하기 위해서는 먼저 위 URL에 가서 라이브러리 코드를 다운로드 받습니다. 다운로드 받는 방법은 다음 사이트에서 녹색 code 버튼을 클릭해서 라이브러리 zip 압축 파일을 다운로드 받습니다. 
 
-```C
-  digitalWrite(2, HIGH);
-  ...
-  digitalWrite(2, LOW);
-```
+![image](https://github.com/JD-edu/JD_robot_platform/assets/96219601/93eb62de-3907-4613-b287-e8c0623c81c9)
+
+다은로드 받은 라이브러리 코드를 사용자 PC에 아두이노 IDE가 설치된 폴더에 카피합니다. 일반적으로 아두이노 IDE가 서리된 폴터는 다음과 같습니다. 
+
+<pre><code>
+https://github.com/vincasmiliunas/ESP32-Arduino-TB6612FNG
+</code></pre>
 
 #### 예제 코드 빌드 및 업로드 
 이제 코드를 빌드하고 ESP32 DevKit 보드로 업로드 해야 합니다. 다음 그림과 같이 ***도구 -> 포트***  메뉴를 통해해서 업로드할 포트를 정해 주어야 합니다. 가능하면 컴퓨터에 ESP32 DevKit 하나만 남겨놓고 작업하는 것이 좋습니다. PC에 ESP32 DevKit가 연결되어 있다면 포트가 빨간색 원처럼 나타날 것 입니다.  
@@ -84,6 +144,4 @@ setup() 함수에서 pinMode()명령을 통해 IO2를 출력모드로 설정합�
 
 ![esp32_컴파일_업로딩](https://github.com/JD-edu/JD_robot_platform/assets/96219601/9b44dbb4-dd78-4342-8775-2e51d8a430d1)
 
-이제 업로드가 완료되면 코드가 동작되면서 LED가 on-off 되는 것을 확인할 수 있습니다. 코드가 동작되면서 시리얼 출력을 하게 되는데 이것은 ***도구 -> 시리얼 모니터***  메뉴를 통해서 시리얼 모니터를 실행할 수 있습니다. 시리얼 모니터가 실행되면 다음 그림과 같이 실행되고 시리얼 메시지가 출력이 됩니다. 
-
-![esp32_led_on_off_serial_monitor](https://github.com/JD-edu/JD_robot_platform/assets/96219601/a1483b23-7afd-47b8-9fcb-86c3d9f928fe)
+이제 업로드가 완료되면 코드가 동작되면서 로봇이 전진 후진 좌회전 우회전을 반복하는 것을 볼 수 있습니다. 
