@@ -18,7 +18,7 @@
 #define PWM4    15
 
 Tb6612fng motors1(16, 14, 12, 13, 26, 27, 25);
-Tb6612fng motors2(16, 5, 17, 18, 4, 2, 15);
+Tb6612fng motors2(16, 5, 17, 18, 2, 4, 15);
 void go_forward(){
   Serial.println("forward");
   motors1.drive(1);
