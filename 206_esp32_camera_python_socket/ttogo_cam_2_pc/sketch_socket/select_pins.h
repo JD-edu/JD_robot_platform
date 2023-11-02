@@ -1,6 +1,8 @@
 /*
     T_Camera_V162_VERSION
 */
+
+// old module - discrete 
 #define PWDN_GPIO_NUM       -1
 #define RESET_GPIO_NUM      -1
 #define XCLK_GPIO_NUM       4
