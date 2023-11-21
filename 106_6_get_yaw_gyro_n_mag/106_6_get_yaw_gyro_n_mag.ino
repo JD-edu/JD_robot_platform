@@ -1,3 +1,5 @@
+// This code shows it is not useful using gyro and mag to get yaw.   
+
 #include "MPU9250.h"
 #include <math.h>
 

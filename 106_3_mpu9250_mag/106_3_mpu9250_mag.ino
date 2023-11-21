@@ -26,7 +26,7 @@ void loop() {
 }
 
 void print_mag() {
-    Serial.print("GyroX, GyroY, GyroZ: ");
+    Serial.print("MagX, MagY, MagZ: ");
     Serial.print(mpu.getMagX(), 2);
     Serial.print(", ");
     Serial.print(mpu.getMagY(), 2);

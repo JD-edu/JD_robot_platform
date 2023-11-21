@@ -26,25 +26,25 @@ Tb6612fng motors2(16, 5, 17, 18, 2, 4, 15);
 void go_forward(){
   Serial.println("forward");
   motors1.drive(0.5);
-  motors2.drive(1);
+  motors2.drive(0.5);
 }
 
 void go_backward(){
   Serial.println("backward");
-  motors1.drive(-1);
-  motors2.drive(-1);
+  motors1.drive(-0.5);
+  motors2.drive(-0.5);
 }
 
 void turn_right(){
   Serial.println("right");
-  motors1.drive(1);
-  motors2.drive(-1);
+  motors1.drive(0.5);
+  motors2.drive(-0.5);
 }
 
 void turn_left(){
   Serial.println("left");
-  motors1.drive(-1);
-  motors2.drive(1); 
+  motors1.drive(-0.5);
+  motors2.drive(0.5); 
 }
 
 void stop(){
