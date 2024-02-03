@@ -11,8 +11,8 @@
 /***************************************
  *  WiFi
  **************************************/
-#define WIFI_SSID   "SK_WiFiGIGA73BA_2.4G"
-#define WIFI_PASSWD "1609043407"
+#define WIFI_SSID   "codinglab5G"
+#define WIFI_PASSWD "codinglab"
 
 #include "select_pins.h"
 
